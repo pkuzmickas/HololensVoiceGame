@@ -49,7 +49,11 @@ public class Board {
                 }
                 else if (row == 1 || row ==6)
                 {
+<<<<<<< HEAD
                     board[col, row] = team * 10 + (int)Pieces.PAWN;
+=======
+                    board[row, col] = team * 10 + (int)Pieces.PAWN;
+>>>>>>> 64c25d079c35a06c763bfa92572918f66396854f
                 }
                 else
                 {
@@ -75,9 +79,13 @@ public class Board {
     }
     public bool movePiece(Move move, PieceColour turn)
     {
+<<<<<<< HEAD
         board[move.destCol, move.destRow] = board[move.col, move.row];
         board[move.col, move.row] = 0;
         return true;
+=======
+        
+>>>>>>> 64c25d079c35a06c763bfa92572918f66396854f
 
         return false;
     }
