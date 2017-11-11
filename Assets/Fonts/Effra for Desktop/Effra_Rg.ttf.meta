@@ -1,0 +1,25 @@
+fileFormatVersion: 2
+guid: a42b7568d65450845ba2017132cf9b50
+timeCreated: 1502790363
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Effra
+  fontNames:
+  - Effra
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 6c54cf12d26ea19468e2ad31ace9d389, type: 3}
+  - {fileID: 12800000, guid: 840a85f98e33e314688b5f226a38a7af, type: 3}
+  - {fileID: 12800000, guid: 5f56fcdc1bc0fbc4e97cbcddd46c41a6, type: 3}
+  - {fileID: 12800000, guid: 4a85fcfcdd9e99748890044e909d8c29, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: 413461b0241fb224f9af68ea4a18f759
+timeCreated: 1502790377
+licenseType: Pro
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: ".\x7F"
+  fontNames:
+  - ".\x7F"
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
