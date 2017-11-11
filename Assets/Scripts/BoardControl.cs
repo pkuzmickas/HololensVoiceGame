@@ -11,8 +11,13 @@ public class BoardControl : MonoBehaviour {
     int whiteAlive=16, blackAlive=16;
     // Use this for initialization
     public Dictionary<int, GameObject> pieces = new Dictionary<int, GameObject>();
+    Dictionary<string, int> colDic = new Dictionary<string, int>();
+    int deathRowW = 9;
+    int deathColW = 0;
+    int deathRowB = -2;
+    int deathColB = 0;
 
-    void initDic
+    void initDic()
     {
         colDic ["A"] = 0;
         colDic ["B"] = 1;
@@ -33,6 +38,7 @@ public class BoardControl : MonoBehaviour {
     }
 
     void Start() {
+        initDic();
         int[,] b = boardObject.getBoard();
         for (int row = 0; row < 8; row++)
         {
@@ -85,21 +91,109 @@ public class BoardControl : MonoBehaviour {
 
     public bool movePiece(string start, string dest)
     {
+        int[,] b = boardObject.getBoard();
         Board.Move m;
         m.col = colDic[start[0].ToString()];
         m.row = (int)(start[1] - '0') - 1;
         m.destCol = colDic[dest[0].ToString()];
         m.destRow = (int)(dest[1] - '0') - 1;
-        Board.PieceColour t = Board.PieceColour.WHITE;
-        GetComponent<BoardControl>().movePiece(m, t);
+        Board.PieceColour t;
+        if (b[m.col, m.row]/100 %10== (int)Board.PieceColour.WHITE)
+        t = Board.PieceColour.WHITE;
+        else t = Board.PieceColour.BLACK;
+        
+        int key = b[m.col, m.row];
+        int key2 = b[m.destCol, m.destRow];
+        Board.PieceColour dt;
+        if (b[m.destCol, m.destRow] / 100 % 10 == (int)Board.PieceColour.WHITE)
+            dt = Board.PieceColour.WHITE;
+        else dt = Board.PieceColour.BLACK;
+        if (key2!=0)
+        {
+            int deathRow, deathCol;
+            if (dt == Board.PieceColour.BLACK)
+            {
+                deathRow = deathRowB;
+                deathCol = deathColB;
+                deathColB++;
+                if (deathColB == 8)
+                {
+                    deathColB = 0;
+                    deathRowB++;
+                }
+            }
+            else
+            {
+                deathRow = deathRowW;
+                deathCol = deathColW;
+                deathColW++;
+                if (deathColW == 8)
+                {
+                    deathColW = 0;
+                    deathRowW++;
+                }
+            }
+            pieces[key2].transform.position = new Vector3(startX + addX * deathRow, startY, startZ + addZ * deathCol);
+            
+        }
+        boardObject.movePiece(m, t);
+
+        pieces[key].transform.position = new Vector3(startX + addX * m.destRow, startY, startZ + addZ * m.destCol);
+        return true;
     }
 
-    public int getCol // padaryk kad keistu A5 i col row
+    public int getCol(string location)
+    {
+        return colDic[location[0].ToString()];
+    }
 
-    public bool movePiece(Board.Move move, Board.PieceColour turn)
+    public int getRow(string location)
+    {
+        return (int)(location[1] - '0') - 1;
+    }
+
+    public bool movePiece(Board.Move move)
     {
         int[,] b = boardObject.getBoard();
+        Board.PieceColour turn;
+        if (b[move.col, move.row] / 100 % 10 == (int)Board.PieceColour.WHITE)
+            turn = Board.PieceColour.WHITE;
+        else turn = Board.PieceColour.BLACK;
         int key = b[move.col, move.row];
+        int key2 = b[move.destCol, move.destRow];
+        Board.PieceColour dt;
+        if (b[move.destCol, move.destRow] / 100 % 10 == (int)Board.PieceColour.WHITE)
+            dt = Board.PieceColour.WHITE;
+        else dt = Board.PieceColour.BLACK;
+        if (key2 != 0)
+        {
+            int deathRow, deathCol;
+            if (dt == Board.PieceColour.BLACK)
+            {
+                deathRow = deathRowB;
+                deathCol = deathColB;
+                deathColB++;
+                if (deathColB == 8)
+                {
+                    deathColB = 0;
+                    deathRowB++;
+                }
+            }
+            else
+            {
+                deathRow = deathRowW;
+                deathCol = deathColW;
+                deathColW++;
+                if (deathColW == 8)
+                {
+                    deathColW = 0;
+                    deathRowW++;
+                }
+            }
+            pieces[key2].transform.position = new Vector3(startX + addX * deathRow, startY, startZ + addZ * deathCol);
+
+        }
+       
         boardObject.movePiece(move, turn);
 
         pieces[key].transform.position = new Vector3(startX + addX * move.destRow, startY, startZ + addZ * move.destCol);
