@@ -8,9 +8,29 @@ public class BoardControl : MonoBehaviour {
     public float startX, startZ, startY, addZ, addX;
     public GameObject pawn_black, pawn_white, rook_black, rook_white, bishop_white, bishop_black, knight_white, knight_black, king_black, king_white, queen_white, queen_black;
     Board boardObject = new Board();
-
+    int whiteAlive=16, blackAlive=16;
     // Use this for initialization
     public Dictionary<int, GameObject> pieces = new Dictionary<int, GameObject>();
+
+    void initDic
+    {
+        colDic ["A"] = 0;
+        colDic ["B"] = 1;
+        colDic ["C"] = 2;
+        colDic ["D"] = 3;
+        colDic ["E"] = 4;
+        colDic ["F"] = 5;
+        colDic ["G"] = 6;
+        colDic ["H"] = 7;
+        colDic ["a"] = 0;
+        colDic ["b"] = 1;
+        colDic ["c"] = 2;
+        colDic ["d"] = 3;
+        colDic ["e"] = 4;
+        colDic ["f"] = 5;
+        colDic ["g"] = 6;
+        colDic ["h"] = 7;
+    }
 
     void Start() {
         int[,] b = boardObject.getBoard();
@@ -63,6 +83,19 @@ public class BoardControl : MonoBehaviour {
        
 	}
 
+    public bool movePiece(string start, string dest)
+    {
+        Board.Move m;
+        m.col = colDic[start[0].ToString()];
+        m.row = (int)(start[1] - '0') - 1;
+        m.destCol = colDic[dest[0].ToString()];
+        m.destRow = (int)(dest[1] - '0') - 1;
+        Board.PieceColour t = Board.PieceColour.WHITE;
+        GetComponent<BoardControl>().movePiece(m, t);
+    }
+
+    public int getCol // padaryk kad keistu A5 i col row
+
     public bool movePiece(Board.Move move, Board.PieceColour turn)
     {
         int[,] b = boardObject.getBoard();
@@ -74,5 +107,14 @@ public class BoardControl : MonoBehaviour {
         return true;
 
 
+    }
+
+    public int getWhiteAlive()
+    {
+        return whiteAlive;
+    }
+    public int getBlackAlive()
+    {
+        return blackAlive;
     }
 }
