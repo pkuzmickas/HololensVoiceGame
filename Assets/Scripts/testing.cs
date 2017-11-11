@@ -32,15 +32,9 @@ public class testing : MonoBehaviour {
 	void Update () {
 		if(go)
         {
-            b = board.getBoard();
             
-            Board.Move m;
-            m.col = colDic[start[0].ToString()];
-            m.row = (int)(start[1] - '0') - 1;
-            m.destCol = colDic[dest[0].ToString()];
-            m.destRow = (int)(dest[1] - '0') - 1;
-            Board.PieceColour t = Board.PieceColour.WHITE;
-            GetComponent<BoardControl>().movePiece(m, t);
+            
+            GetComponent<BoardControl>().movePiece(start,dest);
             go = false;
         }
 	}
