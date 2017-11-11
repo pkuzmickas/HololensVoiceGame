@@ -8,6 +8,7 @@ public class BoardControl : MonoBehaviour
     public GameObject board;
     public float startX, startZ, startY, addZ, addX;
     public GameObject pawn_black, pawn_white, rook_black, rook_white, bishop_white, bishop_black, knight_white, knight_black, king_black, king_white, queen_white, queen_black;
+    public GameObject whiteScoreText, blackScoreText, whitePiecesLeftText, blackPiecesLeftText;
     Board boardObject = new Board();
     int whiteAlive = 16, blackAlive = 16;
     // Use this for initialization
@@ -117,6 +118,7 @@ public class BoardControl : MonoBehaviour
             int deathRow, deathCol;
             if (dt == Board.PieceColour.BLACK)
             {
+                whiteScoreText.GetComponent<WhitePoints>().AddPointsForWhite(b[m.destCol,m.destRow]/10%10);
                 deathRow = deathRowB;
                 deathCol = deathColB;
                 deathColB++;
@@ -128,6 +130,7 @@ public class BoardControl : MonoBehaviour
             }
             else
             {
+                blackScoreText.GetComponent<BlackPoints>().AddPointsForBlack(b[m.destCol, m.destRow] / 10 % 10);
                 deathRow = deathRowW;
                 deathCol = deathColW;
                 deathColW++;

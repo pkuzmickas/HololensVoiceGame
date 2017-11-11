@@ -24,19 +24,19 @@ public class BlackPoints : MonoBehaviour
         switch (piece)
         {
             case 1:
-                points = +5;
+                points += 5;
                 break;
             case 2:
-                points = +3;
+                points += 3;
                 break;
             case 3:
-                points = +3;
+                points += 3;
                 break;
             case 4:
-                points = +9;
+                points += 9;
                 break;
             case 6:
-                points = +1;
+                points += 1;
                 break;
         }
     }
