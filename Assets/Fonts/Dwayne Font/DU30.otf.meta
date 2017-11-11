@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: fb5d300616d693748955f092a1220c52
+timeCreated: 1510416868
+licenseType: Free
+TrueTypeFontImporter:
+  serializedVersion: 4
+  fontSize: 100
+  forceTextureCase: -1
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: DU30
+  fontNames:
+  - DU30
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
