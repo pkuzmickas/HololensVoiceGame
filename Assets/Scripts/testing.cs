@@ -27,7 +27,7 @@ public class testing : MonoBehaviour {
             m.destCol = destCol;
             m.destRow = destRow;
             Board.PieceColour t = Board.PieceColour.WHITE;
-            board.movePiece(m, t);
+            GetComponent<BoardControl>().movePiece(m, t);
             b = board.getBoard();
             Debug.Log("BOARD start: " + b[startCol, startRow]);
             Debug.Log("BOARD dest: " + b[destCol, destRow]);
