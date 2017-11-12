@@ -9,6 +9,7 @@ public class BoardControl : MonoBehaviour
     public float startX, startZ, startY, addZ, addX;
     public GameObject pawn_black, pawn_white, rook_black, rook_white, bishop_white, bishop_black, knight_white, knight_black, king_black, king_white, queen_white, queen_black;
     public GameObject whiteScoreText, blackScoreText, whitePiecesLeftText, blackPiecesLeftText;
+    public GameObject turnIndicator;
     Board boardObject = new Board();
     int whiteAlive = 16, blackAlive = 16;
     // Use this for initialization
@@ -18,6 +19,8 @@ public class BoardControl : MonoBehaviour
     int deathColW = 0;
     int deathRowB = -2;
     int deathColB = 0;
+    string selectedPiece;
+    bool isPieceSelected = false;
 
     void initDic()
     {
@@ -42,6 +45,9 @@ public class BoardControl : MonoBehaviour
     void Start()
     {
         initDic();
+        blackPiecesLeftText.GetComponent<TextMesh>().text = "" + blackAlive;
+        whitePiecesLeftText.GetComponent<TextMesh>().text = "" + whiteAlive;
+
         int[,] b = boardObject.getBoard();
         for (int row = 0; row < 8; row++)
         {
@@ -93,6 +99,8 @@ public class BoardControl : MonoBehaviour
 
     }
 
+    
+
     public bool movePiece(string start, string dest)
     {
         int[,] b = boardObject.getBoard();
@@ -102,12 +110,20 @@ public class BoardControl : MonoBehaviour
         m.destCol = colDic[dest[0].ToString()];
         m.destRow = (int)(dest[1] - '0') - 1;
 
+        
         Board.PieceColour t;
         if (b[m.col, m.row] / 100 % 10 == (int)Board.PieceColour.WHITE)
+        {
             t = Board.PieceColour.WHITE;
-        else t = Board.PieceColour.BLACK;
+            turnIndicator.GetComponent<Animator>().SetTrigger("blackTurn");
+        }
+        else
+        {
+            t = Board.PieceColour.BLACK;
+            turnIndicator.GetComponent<Animator>().SetTrigger("whiteTurn");
+        }
 
-        int key = b[m.col, m.row];
+            int key = b[m.col, m.row];
         int key2 = b[m.destCol, m.destRow];
         Board.PieceColour dt;
         if (b[m.destCol, m.destRow] / 100 % 10 == (int)Board.PieceColour.WHITE)
@@ -118,7 +134,9 @@ public class BoardControl : MonoBehaviour
             int deathRow, deathCol;
             if (dt == Board.PieceColour.BLACK)
             {
+                blackAlive--;
                 whiteScoreText.GetComponent<WhitePoints>().AddPointsForWhite(b[m.destCol,m.destRow]/10%10);
+                whitePiecesLeftText.GetComponent<TextMesh>().text = "" + blackAlive;
                 deathRow = deathRowB;
                 deathCol = deathColB;
                 deathColB++;
@@ -130,7 +148,9 @@ public class BoardControl : MonoBehaviour
             }
             else
             {
+                whiteAlive--;
                 blackScoreText.GetComponent<BlackPoints>().AddPointsForBlack(b[m.destCol, m.destRow] / 10 % 10);
+                blackPiecesLeftText.GetComponent<TextMesh>().text = "" + whiteAlive;
                 deathRow = deathRowW;
                 deathCol = deathColW;
                 deathColW++;
@@ -146,7 +166,29 @@ public class BoardControl : MonoBehaviour
         boardObject.movePiece(m, t);
 
         pieces[key].transform.position = new Vector3(startX + addX * m.destRow, startY, startZ + addZ * m.destCol);
+
+        //CASTLING
+
+        if ((m.row == 0 || m.row == 7) && (( m.col == 4 && m.destCol == 6) || (m.col == 4 && m.destCol == 1)))
+        {
+           
+        }
+        
         return true;
+    }
+
+    public void select(string loc)
+    {
+        Debug.Log("SELECTED " + loc);
+        if (!isPieceSelected)
+        {
+            selectedPiece = loc;
+            isPieceSelected = true;
+        }
+        else
+        {
+            movePiece(selectedPiece, loc);
+        }
     }
 
     public int getCol(string location)
